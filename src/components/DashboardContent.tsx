@@ -161,10 +161,15 @@ export function DashboardContent() {
           />
         </div>
 
+        {/* Health Chart - full width */}
+        <div className="glass-card-elevated rounded-2xl p-6 mb-6 animate-reveal-up stagger-5" style={{ minHeight: 340 }}>
+          <HealthChart />
+        </div>
+
         {/* Two column layout */}
         <div className="grid grid-cols-5 gap-6">
-          {/* Appointments - wider */}
-          <div className="col-span-3 glass-card-elevated rounded-2xl p-6 animate-reveal-up stagger-5">
+          {/* Appointments */}
+          <div className="col-span-3 glass-card-elevated rounded-2xl p-6 animate-reveal-up stagger-6">
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-lg font-display font-semibold text-foreground">Upcoming Appointments</h2>
               <button className="text-xs font-medium text-primary flex items-center gap-1 hover:underline underline-offset-2">
@@ -172,33 +177,15 @@ export function DashboardContent() {
               </button>
             </div>
             <div className="space-y-3">
-              <AppointmentCard
-                pet="Milo"
-                vet="Dr. Chen — Greenfield Vet"
-                time="Today, 2pm"
-                type="Annual Checkup"
-                stagger="stagger-5"
-              />
-              <AppointmentCard
-                pet="Luna"
-                vet="Dr. Patel — PawCare"
-                time="Thu, 10am"
-                type="Dental Cleaning"
-                stagger="stagger-6"
-              />
-              <AppointmentCard
-                pet="Oscar"
-                vet="Dr. Kim — AquaVet"
-                time="Sat, 3pm"
-                type="Scale Check"
-                stagger="stagger-7"
-              />
+              <AppointmentCard pet="Milo" vet="Dr. Chen — Greenfield Vet" time="Today, 2pm" type="Annual Checkup" stagger="stagger-5" />
+              <AppointmentCard pet="Luna" vet="Dr. Patel — PawCare" time="Thu, 10am" type="Dental Cleaning" stagger="stagger-6" />
+              <AppointmentCard pet="Oscar" vet="Dr. Kim — AquaVet" time="Sat, 3pm" type="Scale Check" stagger="stagger-7" />
             </div>
           </div>
 
-          {/* Health summary */}
-          <div className="col-span-2 glass-card-elevated rounded-2xl p-6 animate-reveal-up stagger-6">
-            <h2 className="text-lg font-display font-semibold text-foreground mb-5">Health Overview</h2>
+          {/* Pet Scores */}
+          <div className="col-span-2 glass-card-elevated rounded-2xl p-6 animate-reveal-up stagger-7">
+            <h2 className="text-lg font-display font-semibold text-foreground mb-5">Current Scores</h2>
             <div className="space-y-4">
               {[
                 { name: "Milo", species: "Golden Retriever", score: 97, color: "bg-primary" },
@@ -216,16 +203,14 @@ export function DashboardContent() {
                     </div>
                     <p className="text-xs text-muted-foreground">{pet.species}</p>
                     <div className="mt-1.5 h-1.5 rounded-full bg-muted overflow-hidden">
-                      <div
-                        className={`h-full rounded-full ${pet.color} transition-all duration-700`}
-                        style={{ width: `${pet.score}%` }}
-                      />
+                      <div className={`h-full rounded-full ${pet.color} transition-all duration-700`} style={{ width: `${pet.score}%` }} />
                     </div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
+        </div>
         </div>
 
         {/* Products */}
