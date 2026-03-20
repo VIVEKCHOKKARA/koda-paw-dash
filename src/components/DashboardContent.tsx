@@ -211,7 +211,6 @@ export function DashboardContent() {
             </div>
           </div>
         </div>
-        </div>
 
         {/* Products */}
         <div className="mt-8 animate-reveal-up stagger-7">
