@@ -8,6 +8,7 @@ import {
   Clock,
   MapPin,
 } from "lucide-react";
+import { HealthChart } from "@/components/HealthChart";
 
 function StatCard({
   label,
