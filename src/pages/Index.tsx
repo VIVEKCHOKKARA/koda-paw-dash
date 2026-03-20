@@ -1,13 +1,10 @@
-import { KodaSidebar } from "@/components/KodaSidebar";
+import { PageLayout } from "@/components/PageLayout";
 import { DashboardContent } from "@/components/DashboardContent";
 
-const Index = () => {
-  return (
-    <div className="flex min-h-screen w-full">
-      <KodaSidebar />
-      <DashboardContent />
-    </div>
-  );
-};
+const Index = () => (
+  <PageLayout>
+    <DashboardContent />
+  </PageLayout>
+);
 
 export default Index;
