@@ -10,6 +10,7 @@ import PetMarketplace from "./pages/PetMarketplace.tsx";
 import HealthMonitor from "./pages/HealthMonitor.tsx";
 import VetAppointments from "./pages/VetAppointments.tsx";
 import PetFood from "./pages/PetFood.tsx";
+import PetTraining from "./pages/PetTraining.tsx";
 import Auth from "./pages/Auth.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
@@ -39,6 +40,7 @@ const AppRoutes = () => (
     <Route path="/health" element={<ProtectedRoute><HealthMonitor /></ProtectedRoute>} />
     <Route path="/vet" element={<ProtectedRoute><VetAppointments /></ProtectedRoute>} />
     <Route path="/food" element={<ProtectedRoute><PetFood /></ProtectedRoute>} />
+    <Route path="/training" element={<ProtectedRoute><PetTraining /></ProtectedRoute>} />
     <Route path="*" element={<NotFound />} />
   </Routes>
 );
