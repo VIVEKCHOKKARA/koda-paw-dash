@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import {
   TrendingUp, Calendar, ShoppingBag, HeartPulse, ArrowUpRight,
-  Star, Clock, MapPin, Bone, Stethoscope, PawPrint, GraduationCap,
-  Package, Users, MessageCircle,
+  Star, Clock, MapPin, Bone, Stethoscope, PawPrint,
+  Package, Users,
 } from "lucide-react";
 import { HealthChart } from "@/components/HealthChart";
+import { HeroScene } from "@/components/HeroScene";
+import { ServiceSlider } from "@/components/ServiceSlider";
 import { useAuth } from "@/contexts/AuthContext";
 
 function StatCard({ label, value, change, icon: Icon, color, stagger = "", onClick }: {
@@ -12,7 +14,7 @@ function StatCard({ label, value, change, icon: Icon, color, stagger = "", onCli
   color: string; stagger?: string; onClick?: () => void;
 }) {
   return (
-    <div className={`glass-card-elevated rounded-2xl p-5 flex flex-col gap-3 animate-reveal-up cursor-pointer hover:shadow-xl transition-shadow duration-300 active:scale-[0.98] ${stagger}`} onClick={onClick}>
+    <div className={`glass-card-elevated rounded-2xl p-5 flex flex-col gap-3 animate-reveal-up cursor-pointer hover:shadow-xl transition-all duration-300 active:scale-[0.98] hover:-translate-y-1 ${stagger}`} onClick={onClick}>
       <div className="flex items-center justify-between">
         <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${color}`}>
           <Icon className="w-5 h-5" />
@@ -29,30 +31,11 @@ function StatCard({ label, value, change, icon: Icon, color, stagger = "", onCli
   );
 }
 
-function ServiceCard({ title, description, icon: Icon, color, stagger, onClick }: {
-  title: string; description: string; icon: React.ComponentType<{ className?: string }>;
-  color: string; stagger: string; onClick: () => void;
-}) {
-  return (
-    <div className={`glass-card-elevated rounded-2xl p-6 cursor-pointer hover:shadow-xl transition-all duration-300 active:scale-[0.98] animate-reveal-up group ${stagger}`} onClick={onClick}>
-      <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${color} group-hover:scale-110 transition-transform duration-300`}>
-        <Icon className="w-6 h-6" />
-      </div>
-      <h3 className="text-base font-display font-semibold text-foreground mb-1">{title}</h3>
-      <p className="text-xs text-muted-foreground leading-relaxed">{description}</p>
-      <div className="flex items-center gap-1 mt-4 text-xs font-medium text-primary">
-        Explore <ArrowUpRight className="w-3 h-3" />
-      </div>
-    </div>
-  );
-}
-
 export function DashboardContent() {
   const navigate = useNavigate();
   const { role, profile } = useAuth();
   const displayName = profile?.display_name || "there";
 
-  // Role-specific stats
   const customerStats = [
     { label: "My Pets", value: "3", change: "+1", icon: HeartPulse, color: "bg-primary/10 text-primary" },
     { label: "Appointments", value: "7", change: "+2", icon: Calendar, color: "bg-koda-warm/10 text-koda-warm" },
@@ -76,25 +59,21 @@ export function DashboardContent() {
 
   const stats = role === "owner" ? ownerStats : role === "doctor" ? doctorStats : customerStats;
 
-  const services = [
-    { title: "Pet Marketplace", description: role === "owner" ? "Manage your listed pets and add new ones for sale." : "Browse and buy certified pets from trusted sellers.", icon: ShoppingBag, color: "bg-primary/10 text-primary", path: "/marketplace" },
-    { title: "Health Monitor", description: "Track vaccinations, medications, and overall health status.", icon: HeartPulse, color: "bg-koda-warm/10 text-koda-warm", path: "/health" },
-    { title: "Vet Appointments", description: role === "doctor" ? "Manage appointments and patient records." : "Book appointments with verified veterinarians.", icon: Stethoscope, color: "bg-koda-sky/10 text-koda-sky", path: "/vet" },
-    { title: "Pet Food", description: role === "owner" ? "Manage food products and inventory." : "Order quality pet food by species category.", icon: Bone, color: "bg-koda-rose/10 text-koda-rose", path: "/food" },
-    { title: "Pet Training", description: "Learn how to train your pet with expert guides and tips.", icon: GraduationCap, color: "bg-koda-sand text-koda-charcoal", path: "/training" },
-    { title: "AI Chatbot", description: "Get instant answers to your pet care questions.", icon: MessageCircle, color: "bg-accent/20 text-accent", path: "/chatbot" },
-  ];
-
   return (
     <div className="max-w-6xl mx-auto px-8 py-8">
       {/* Header */}
-      <div className="mb-8 animate-reveal-up">
+      <div className="mb-6 animate-reveal-up">
         <p className="text-sm text-muted-foreground">
           {role === "doctor" ? "Welcome, Dr." : role === "owner" ? "Welcome back," : "Good morning,"} {displayName} 👋
         </p>
         <h1 className="text-3xl font-display font-bold text-foreground mt-1" style={{ lineHeight: 1.1 }}>
           {role === "doctor" ? "Clinic Dashboard" : role === "owner" ? "Seller Dashboard" : "Pet Dashboard"}
         </h1>
+      </div>
+
+      {/* 3D Hero Scene */}
+      <div className="mb-6 animate-reveal-up stagger-1 rounded-2xl overflow-hidden glass-card-elevated">
+        <HeroScene />
       </div>
 
       {/* Stats */}
@@ -104,14 +83,10 @@ export function DashboardContent() {
         ))}
       </div>
 
-      {/* Services */}
+      {/* Service Slider */}
       <div className="mb-8">
         <h2 className="text-lg font-display font-semibold text-foreground mb-5 animate-reveal-up stagger-4">Our Services</h2>
-        <div className="grid grid-cols-3 gap-4">
-          {services.map((s, i) => (
-            <ServiceCard key={s.title} {...s} stagger={`stagger-${i + 5}`} onClick={() => navigate(s.path)} />
-          ))}
-        </div>
+        <ServiceSlider />
       </div>
 
       {/* Health Chart */}
@@ -133,14 +108,12 @@ export function DashboardContent() {
           </div>
           <div className="space-y-3">
             {[
-              { pet: "Milo", vet: "Dr. Chen — Greenfield Vet", time: "Today, 2pm", type: "Annual Checkup" },
-              { pet: "Luna", vet: "Dr. Patel — PawCare", time: "Thu, 10am", type: "Dental Cleaning" },
-              { pet: "Oscar", vet: "Dr. Kim — AquaVet", time: "Sat, 3pm", type: "Scale Check" },
+              { pet: "Milo", vet: "Dr. Chen — Greenfield Vet", time: "Today, 2pm", type: "Annual Checkup", img: "https://images.unsplash.com/photo-1552053831-71594a27632d?w=80&h=80&fit=crop" },
+              { pet: "Luna", vet: "Dr. Patel — PawCare", time: "Thu, 10am", type: "Dental Cleaning", img: "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=80&h=80&fit=crop" },
+              { pet: "Oscar", vet: "Dr. Kim — AquaVet", time: "Sat, 3pm", type: "Scale Check", img: "https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?w=80&h=80&fit=crop" },
             ].map((apt, i) => (
-              <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-muted/40 hover:bg-muted/60 transition-colors duration-200 cursor-pointer" onClick={() => navigate("/vet")}>
-                <div className="w-11 h-11 rounded-xl bg-koda-sage-light flex items-center justify-center text-sm font-bold text-primary">
-                  {apt.pet[0]}
-                </div>
+              <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-muted/40 hover:bg-muted/60 transition-all duration-200 cursor-pointer hover:-translate-x-1" onClick={() => navigate("/vet")}>
+                <img src={apt.img} alt={apt.pet} className="w-11 h-11 rounded-xl object-cover" />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-semibold text-foreground">{apt.pet}</p>
                   <p className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
@@ -162,14 +135,12 @@ export function DashboardContent() {
           </h2>
           <div className="space-y-4">
             {[
-              { name: "Milo", species: "Golden Retriever", score: 97, color: "bg-primary" },
-              { name: "Luna", species: "Maine Coon", score: 91, color: "bg-koda-warm" },
-              { name: "Oscar", species: "Betta Fish", score: 88, color: "bg-koda-sky" },
+              { name: "Milo", species: "Golden Retriever", score: 97, color: "bg-primary", img: "https://images.unsplash.com/photo-1552053831-71594a27632d?w=80&h=80&fit=crop" },
+              { name: "Luna", species: "Maine Coon", score: 91, color: "bg-koda-warm", img: "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=80&h=80&fit=crop" },
+              { name: "Oscar", species: "Betta Fish", score: 88, color: "bg-koda-sky", img: "https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?w=80&h=80&fit=crop" },
             ].map((pet) => (
-              <div key={pet.name} className="flex items-center gap-3 cursor-pointer" onClick={() => navigate("/health")}>
-                <div className="w-9 h-9 rounded-xl bg-koda-sage-light flex items-center justify-center text-xs font-bold text-primary">
-                  {pet.name[0]}
-                </div>
+              <div key={pet.name} className="flex items-center gap-3 cursor-pointer hover:translate-x-1 transition-transform duration-200" onClick={() => navigate("/health")}>
+                <img src={pet.img} alt={pet.name} className="w-9 h-9 rounded-xl object-cover" />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
                     <p className="text-sm font-medium text-foreground">{pet.name}</p>
