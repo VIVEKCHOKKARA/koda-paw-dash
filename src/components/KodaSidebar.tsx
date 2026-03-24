@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import {
   ShoppingBag, HeartPulse, Stethoscope, Bone, ChevronDown,
   Dog, Cat, Bird, Fish, Search, Bell, PawPrint, LayoutDashboard,
-  Sun, Moon, LogOut, GraduationCap,
+  Sun, Moon, LogOut, GraduationCap, MessageCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
@@ -23,6 +23,7 @@ const allNav: NavItem[] = [
   { label: "Vet Appointments", icon: Stethoscope, path: "/vet" },
   { label: "Pet Food", icon: Bone, path: "/food" },
   { label: "Pet Training", icon: GraduationCap, path: "/training" },
+  { label: "AI Chatbot", icon: MessageCircle, path: "/chatbot" },
 ];
 
 interface SpeciesCategory { label: string; items: string[]; }
