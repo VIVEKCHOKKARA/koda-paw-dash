@@ -14,6 +14,334 @@ export type Database = {
   }
   public: {
     Tables: {
+      appointments: {
+        Row: {
+          appointment_date: string
+          appointment_time: string
+          created_at: string
+          customer_id: string
+          doctor_id: string | null
+          id: string
+          notes: string | null
+          pet_name: string
+          status: string
+          visit_type: string
+        }
+        Insert: {
+          appointment_date: string
+          appointment_time: string
+          created_at?: string
+          customer_id: string
+          doctor_id?: string | null
+          id?: string
+          notes?: string | null
+          pet_name: string
+          status?: string
+          visit_type?: string
+        }
+        Update: {
+          appointment_date?: string
+          appointment_time?: string
+          created_at?: string
+          customer_id?: string
+          doctor_id?: string | null
+          id?: string
+          notes?: string | null
+          pet_name?: string
+          status?: string
+          visit_type?: string
+        }
+        Relationships: []
+      }
+      cart_items: {
+        Row: {
+          created_at: string
+          id: string
+          item_id: string
+          item_type: string
+          quantity: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          item_id: string
+          item_type: string
+          quantity?: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          item_id?: string
+          item_type?: string
+          quantity?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      food_products: {
+        Row: {
+          animal_type: string
+          brand: string
+          category: string
+          created_at: string
+          description: string
+          id: string
+          image_url: string | null
+          is_available: boolean
+          name: string
+          owner_id: string
+          price: number
+          tag: string | null
+          updated_at: string
+          weight: string | null
+        }
+        Insert: {
+          animal_type?: string
+          brand?: string
+          category: string
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string | null
+          is_available?: boolean
+          name: string
+          owner_id: string
+          price?: number
+          tag?: string | null
+          updated_at?: string
+          weight?: string | null
+        }
+        Update: {
+          animal_type?: string
+          brand?: string
+          category?: string
+          created_at?: string
+          description?: string
+          id?: string
+          image_url?: string | null
+          is_available?: boolean
+          name?: string
+          owner_id?: string
+          price?: number
+          tag?: string | null
+          updated_at?: string
+          weight?: string | null
+        }
+        Relationships: []
+      }
+      medicines: {
+        Row: {
+          animal_type: string
+          category: string
+          created_at: string
+          description: string
+          dosage: string | null
+          id: string
+          image_url: string | null
+          is_available: boolean
+          name: string
+          owner_id: string
+          prescription_required: boolean
+          price: number
+          updated_at: string
+        }
+        Insert: {
+          animal_type?: string
+          category: string
+          created_at?: string
+          description?: string
+          dosage?: string | null
+          id?: string
+          image_url?: string | null
+          is_available?: boolean
+          name: string
+          owner_id: string
+          prescription_required?: boolean
+          price?: number
+          updated_at?: string
+        }
+        Update: {
+          animal_type?: string
+          category?: string
+          created_at?: string
+          description?: string
+          dosage?: string | null
+          id?: string
+          image_url?: string | null
+          is_available?: boolean
+          name?: string
+          owner_id?: string
+          prescription_required?: boolean
+          price?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      order_items: {
+        Row: {
+          id: string
+          item_id: string
+          item_name: string
+          item_type: string
+          order_id: string
+          price: number
+          quantity: number
+        }
+        Insert: {
+          id?: string
+          item_id: string
+          item_name: string
+          item_type: string
+          order_id: string
+          price?: number
+          quantity?: number
+        }
+        Update: {
+          id?: string
+          item_id?: string
+          item_name?: string
+          item_type?: string
+          order_id?: string
+          price?: number
+          quantity?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          created_at: string
+          id: string
+          status: string
+          total: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          status?: string
+          total?: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          status?: string
+          total?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
+      pet_health_records: {
+        Row: {
+          health_score: number
+          id: string
+          notes: string | null
+          pet_id: string
+          recorded_at: string
+          recorded_by: string | null
+          weight_kg: number | null
+        }
+        Insert: {
+          health_score?: number
+          id?: string
+          notes?: string | null
+          pet_id: string
+          recorded_at?: string
+          recorded_by?: string | null
+          weight_kg?: number | null
+        }
+        Update: {
+          health_score?: number
+          id?: string
+          notes?: string | null
+          pet_id?: string
+          recorded_at?: string
+          recorded_by?: string | null
+          weight_kg?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pet_health_records_pet_id_fkey"
+            columns: ["pet_id"]
+            isOneToOne: false
+            referencedRelation: "pets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pets: {
+        Row: {
+          age: string
+          breed: string
+          category: string
+          certificate_id: string | null
+          certified: boolean
+          created_at: string
+          description: string
+          health_status: string
+          id: string
+          image_url: string | null
+          is_available: boolean
+          name: string
+          owner_id: string
+          price: number
+          species: string
+          temperament: string | null
+          updated_at: string
+          vaccinated: boolean
+        }
+        Insert: {
+          age?: string
+          breed: string
+          category: string
+          certificate_id?: string | null
+          certified?: boolean
+          created_at?: string
+          description?: string
+          health_status?: string
+          id?: string
+          image_url?: string | null
+          is_available?: boolean
+          name: string
+          owner_id: string
+          price?: number
+          species: string
+          temperament?: string | null
+          updated_at?: string
+          vaccinated?: boolean
+        }
+        Update: {
+          age?: string
+          breed?: string
+          category?: string
+          certificate_id?: string | null
+          certified?: boolean
+          created_at?: string
+          description?: string
+          health_status?: string
+          id?: string
+          image_url?: string | null
+          is_available?: boolean
+          name?: string
+          owner_id?: string
+          price?: number
+          species?: string
+          temperament?: string | null
+          updated_at?: string
+          vaccinated?: boolean
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           address: string | null
@@ -62,6 +390,39 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      vet_locations: {
+        Row: {
+          address: string | null
+          clinic_name: string
+          created_at: string
+          doctor_id: string
+          id: string
+          latitude: number
+          longitude: number
+          phone: string | null
+        }
+        Insert: {
+          address?: string | null
+          clinic_name: string
+          created_at?: string
+          doctor_id: string
+          id?: string
+          latitude: number
+          longitude: number
+          phone?: string | null
+        }
+        Update: {
+          address?: string | null
+          clinic_name?: string
+          created_at?: string
+          doctor_id?: string
+          id?: string
+          latitude?: number
+          longitude?: number
+          phone?: string | null
         }
         Relationships: []
       }
