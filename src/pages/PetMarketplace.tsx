@@ -4,6 +4,7 @@ import { PageLayout } from "@/components/PageLayout";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
 import { supabase } from "@/integrations/supabase/client";
+import { PetImageUpload } from "@/components/PetImageUpload";
 import {
   ShieldCheck, Heart, ShoppingCart, Star, Syringe, Tag, Plus, Filter, Search, X, Edit, Trash2,
 } from "lucide-react";
@@ -92,7 +93,10 @@ function PetForm({ pet, onSave, onCancel }: { pet?: Pet; onSave: () => void; onC
               </select>
             </div>
           </div>
-          {field("Image URL", "image_url")}
+          <PetImageUpload
+            currentImageUrl={form.image_url}
+            onImageUploaded={(url) => setForm(f => ({ ...f, image_url: url }))}
+          />
           {field("Description", "description")}
           {field("Temperament", "temperament")}
           {field("Health Status", "health_status")}

@@ -5,7 +5,6 @@ import {
   Package, Users,
 } from "lucide-react";
 import { HealthChart } from "@/components/HealthChart";
-import { HeroScene } from "@/components/HeroScene";
 import { ServiceSlider } from "@/components/ServiceSlider";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -69,11 +68,6 @@ export function DashboardContent() {
         <h1 className="text-3xl font-display font-bold text-foreground mt-1" style={{ lineHeight: 1.1 }}>
           {role === "doctor" ? "Clinic Dashboard" : role === "owner" ? "Seller Dashboard" : "Pet Dashboard"}
         </h1>
-      </div>
-
-      {/* 3D Hero Scene */}
-      <div className="mb-6 animate-reveal-up stagger-1 rounded-2xl overflow-hidden glass-card-elevated">
-        <HeroScene />
       </div>
 
       {/* Stats */}

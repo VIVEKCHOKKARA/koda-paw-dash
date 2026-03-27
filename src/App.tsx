@@ -14,6 +14,8 @@ import PetFood from "./pages/PetFood.tsx";
 import PetTraining from "./pages/PetTraining.tsx";
 import Chatbot from "./pages/Chatbot.tsx";
 import Auth from "./pages/Auth.tsx";
+import SellerOrders from "./pages/SellerOrders.tsx";
+import OrderTracking from "./pages/OrderTracking.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -44,6 +46,8 @@ const AppRoutes = () => (
     <Route path="/food" element={<ProtectedRoute><PetFood /></ProtectedRoute>} />
     <Route path="/training" element={<ProtectedRoute><PetTraining /></ProtectedRoute>} />
     <Route path="/chatbot" element={<ProtectedRoute><Chatbot /></ProtectedRoute>} />
+    <Route path="/orders" element={<ProtectedRoute><SellerOrders /></ProtectedRoute>} />
+    <Route path="/track-orders" element={<ProtectedRoute><OrderTracking /></ProtectedRoute>} />
     <Route path="*" element={<NotFound />} />
   </Routes>
 );

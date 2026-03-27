@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import {
   ShoppingBag, HeartPulse, Stethoscope, Bone, ChevronDown,
   Dog, Cat, Bird, Fish, Search, Bell, PawPrint, LayoutDashboard,
-  Sun, Moon, LogOut, GraduationCap, MessageCircle, ShoppingCart,
+  Sun, Moon, LogOut, GraduationCap, MessageCircle, ShoppingCart, ClipboardList, Truck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
@@ -19,6 +19,9 @@ const allNav = [
   { label: "Food & Medicine", icon: Bone, path: "/food" },
   { label: "Pet Training", icon: GraduationCap, path: "/training" },
   { label: "AI Chatbot", icon: MessageCircle, path: "/chatbot" },
+  { label: "Customer Orders", icon: ClipboardList, path: "/orders", roleOnly: "owner" },
+  { label: "Order Tracking", icon: Truck, path: "/track-orders", roleOnly: "customer" },
+  { label: "Order Tracking", icon: Truck, path: "/track-orders", roleOnly: "doctor" },
 ];
 
 const speciesLibrary = [
@@ -94,7 +97,7 @@ export function KodaSidebar() {
         <nav className="px-3 mt-2">
           <p className="px-3 mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/70">Services</p>
           <ul className="space-y-0.5">
-            {allNav.map((item) => {
+            {allNav.filter(item => !item.roleOnly || item.roleOnly === role).map((item) => {
               const isActive = location.pathname === item.path;
               return (
                 <li key={item.label}>
